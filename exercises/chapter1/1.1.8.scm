@@ -1,4 +1,5 @@
-
+;;; (exp x) returns e^x
+;;; (log x) returns ln(x)
 
 ;;; We haven't seen exp yet.
 (define (square x)
