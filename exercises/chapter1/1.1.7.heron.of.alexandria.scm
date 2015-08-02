@@ -17,7 +17,7 @@
 
 ; determine when a new guess is close enough to the previous guess
 (define (good-enough? guess radicand) 
-  (< (abs (- (square guess) radicand)) 0.001))
+  (< (abs (- (square guess) radicand)) 0.00001))
 
 ; main method, use the control flow
 (define (sqrt-iter guess radicand)
@@ -34,3 +34,4 @@
 (sqrt (+ 100 37))
 (sqrt (+ (sqrt 2) (sqrt 3)))
 (square (sqrt 1000))
+(sqrt 0.002)
