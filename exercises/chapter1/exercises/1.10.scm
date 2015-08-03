@@ -25,6 +25,7 @@
 (define (h n) (A 2 n))
 
 ;(f n) computes 2n
+;
 ;(g n) computes (A 0 (A 1 (n-1))). 
 ; The component (A 1 (n-1)) computes to (A 0 (A 1 (n-2)))
 ; In turn, that computes to (A 0 (A 1 (n-3))
@@ -32,8 +33,14 @@
 ; So in the terminating case p=n-1, A yields 2 for y.
 ; This can be passed into the parent to evaluate (A 0 2), which yields 4
 ; This is passed into the parent yielding (A 0 4) == 8.
-; This continues on p times, yielding 2^(n-1)
+; This continues on p times, yielding 2^n.
+; CONFUSING POINT: If the recursion occurs only n-1 times, why do we yield 2^n?
+; CONFUSING ANSWER: We have to include the base case, 2, in the result, which is
+; an extra 2, thus the answer is MORE PURE in the form 2*2^(n-1)
+; I found this out by trial and error...
+;
 ;(h n) computes (A 0 (A 0 (n - 1)))
+;
 
 ; used in (f n) (g n)
 (define (dec x)
@@ -52,22 +59,22 @@
 
 
 
-; test for (f n) up to n=100
-(define (test_f c)
-  (if (= c 0) 
+; test for (f n) up to n=100 (starting at 100)
+(define (test_f n)
+  (if (= n 0) 
     #t
-    (if (= (f c) (* 2 c))
-      (test_f (dec c))
+    (if (= (f n) (* 2 n))
+      (test_f (dec n))
       #f)))
 
 (test_f 100)
 
-; test for (g n) up to n=100
-;(define (test_g c)
-;  (if (= c 0) 
-;    #t
-;    (if (= (g c) (- (* 4 (square c)) (* 2 c)))
-;      (test_g (dec c)) 
-;      #f)))
+; test for (g n) up to n=100 (starting at 100)
+(define (test_g n)
+  (if (= n 0) 
+    #t
+    (if (= (g n) (** 2 n))
+      (test_g (dec n)) 
+      #f )))
 
-;(test_g 100)
+(test_g 100)
