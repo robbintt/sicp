@@ -14,6 +14,9 @@
 
 (A 1 10)
 (A 2 4)
+(A 2 3)
+(A 2 5)
+(A 2 6)
 (A 3 3)
 
 ;; give concise mathematical definitions for the functions computed by f g and h for
@@ -40,14 +43,62 @@
 ; I found this out by trial and error...
 ;
 ;(h n) computes (A 0 (A 0 (n - 1)))
+; First, (h n) is (A 2 n), computing A yields (A 1 (A 2 n-1)).
+; Focusing first on the internal (A 2 n-1), computing A yields (A 1 (A 2 n-2)))
+; The internal (A 2 n-2) will continue until the base case n-p = 1, yielding 2.
+; It behaves exactly like the internal case in (g n), yielding 2^n
+; Now lets move on to the external (A 1 (2^n)), which simplifies to (A 0 (A 1 (2^n)-1))
+; This expands to 2*(A 1 (2^n)-1), which simplifies to 2*(A 0 (A 1 (2^n)-2))
+; The pattern becomes apparent: 2*2*(A 1 (2^n)-2)
+; So for each expansion p, we get 2^p, with a limiting factor where 2^n = p which
+; yields (A 1 0) = 2.
+; Or in english, result == two times (two to the on) twos.
 ;
+; This didn't quite work, unfortunately my test below doesn't work either, because
+; it drops out at n=4 citing recursion depth.
+; I seem to have experimentally found the solution below, but the test set is too small.
+;
+; (h 1)
+; (A 2 1)
+; 2
+;
+; (h 2)
+; (A 2 2)
+; (A 1 (A 2 1))
+; (A 1 2)
+; (A 0 (A 1 1)
+; (A 0 2)
+; 4
+;
+; (h 3)
+; (A 2 3)
+; (A 1 (A 2 2))
+; ... # substitute 4 from (h 2)
+; (A 1 4)   # from (h 2)
+; (A 0 (A 1 3))
+; (A 0 (A 0 (A 1 2)))
+; (A 0 (A 0 (A 0 (A 1 1))))
+; (A 0 (A 0 (A 0 2)))
+; (A 0 (A 0 4))
+; (A 0 8)
+; 16
+; (h 3) result = 16
+;
+; We know (h 4) yields 65536 or 2^16, this could give a hint.
+; This follows the general pattern 2^2^2^2 = 2^16 = 65536
+;
+; I have to pass on this problem citing time.
+; NEXT STEPS: 
+; 1. Write python script to expand (h 4) for visual review.
+; 2. USE PAPER to write down your theoretical expansions using p values. This is probably
+;   the easiest and most profound thing. You almost had it!
+
+
+;;; TESTS BELOW
 
 ; used in (f n) (g n)
 (define (dec x)
   (- x 1))
-; used in (g n) NOT USED??
-(define (square x)
-  (* x x))
 
 ; used in (g n), only works for x > 0, y >= 0
 (define (** x y)
@@ -60,6 +111,7 @@
 
 
 ; test for (f n) up to n=100 (starting at 100)
+; PASSES
 (define (test_f n)
   (if (= n 0) 
     #t
@@ -70,6 +122,7 @@
 (test_f 100)
 
 ; test for (g n) up to n=100 (starting at 100)
+; PASSES
 (define (test_g n)
   (if (= n 0) 
     #t
@@ -78,3 +131,20 @@
       #f )))
 
 (test_g 100)
+
+
+; This is the obvious pattern and indeed it fits.
+; (h n) runs 2^2^2... for n times.
+; My test pattern breaks down for this above 4 because of recursion depth limits.
+; Here is a manual test up to 4.
+(h 4)
+(** 2 (** 2 (** 2 2)))
+(h 3)
+(** 2 (** 2 2 ))
+(h 2)
+(** 2 2)
+(h 1)
+2
+
+
+
