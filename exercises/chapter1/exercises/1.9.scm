@@ -3,6 +3,8 @@
 ; in evaluating (+ 4 5). Are these processes iterative or recursive?
 ; note: both are 'recursive procedures', only one seems to be a 'recursive process'
 ; note2: note is correct.
+;
+; by the way.. these don't run, dec isn't defined!
 
 
 (define (+ a b)
