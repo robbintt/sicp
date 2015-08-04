@@ -65,7 +65,7 @@
 ; (h 2)
 ; (A 2 2)
 ; (A 1 (A 2 1))
-; (A 1 2)
+; (A 1 2) # important key point, the x=2 degenerates to x=1 if y is <= 2.
 ; (A 0 (A 1 1)
 ; (A 0 2)
 ; 4
@@ -73,8 +73,11 @@
 ; (h 3)
 ; (A 2 3)
 ; (A 1 (A 2 2))
-; ... # substitute 4 from (h 2)
-; (A 1 4)   # from (h 2)
+; (A 1 (A 1 (A 2 1)))
+; (A 1 (A 1 2))
+; (A 1 (A 0 (A 1 1)))
+; (A 1 (A 0 2))
+; (A 1 4) ;;; BIG HINT - (A 2 3) reduces to (A 1 4).
 ; (A 0 (A 1 3))
 ; (A 0 (A 0 (A 1 2)))
 ; (A 0 (A 0 (A 0 (A 1 1))))
@@ -83,6 +86,41 @@
 ; (A 0 8)
 ; 16
 ; (h 3) result = 16
+;
+; (h 4)
+; (A 2 4)
+; (A 1 (A 2 3)) ;;; expanding (A X Y) yields (A X-1 Y+1)
+; (A 1 (A 1 (A 2 2)))
+; (A 1 (A 1 (A 1 (A 2 1))))
+; (A 1 (A 1 (A 1 2)))
+; (A 1 (A 1 (A 0 (A 1 1))))
+; (A 1 (A 1 (A 0 2)))
+; (A 1 (A 1 4)) ;;; expanding (A 1 X) yields 2^X 
+; (A 1 (A 0 (A 1 3)))
+; (A 1 (A 0 (A 0 (A 1 2))))
+; (A 1 (A 0 (A 0 (A 0 (A 1 1)))))
+; (A 1 (A 0 (A 0 (A 0 2))))
+; (A 1 (A 0 (A 0 4)))  
+; (A 1 (A 0 8))
+; (A 1 16) ;;; This contraction of (A 0 X) terms is one expansion action
+;
+; TAR 080415 -  (h 4) always yields 2^2^2... expanding ^2 n times...
+;               This model always does an early expansion of:
+;               (A 2 N)
+;               (A 1 (A 2 N-1))
+;               (A 1 (A 1 (A 2 N-2)))
+;               ...
+;               (A 1 (A 1 ... (A 1 (A 2 N-P)) ... )), where p = (N-1)
+;               (A 1 (A 1 ... (A 1 (A 2 1)) ... )) reduces to
+;               (A 1 (A 1 ... (A 1 2))) ... )) which also reduces neatly to
+;               2^2^2...^2 for a total of p times including the 4 from (A 2 1)
+;
+;               lets finish the first of p expansions:
+;               (A 1 (A 1 ... (A 1 2) ... ))
+;               (A 1 (A 1 ... (A 0 (A 1 1)) ... ))
+;               (A 1 (A 1 ... (A 0 2) ... ))
+;               (A 1 (A 1 ... 4 ... )) This includes the internal 2 from (A 2 1)
+;
 ;
 ; We know (h 4) yields 65536 or 2^16, this could give a hint.
 ; This follows the general pattern 2^2^2^2 = 2^16 = 65536
