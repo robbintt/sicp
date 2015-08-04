@@ -125,12 +125,6 @@
 ; We know (h 4) yields 65536 or 2^16, this could give a hint.
 ; This follows the general pattern 2^2^2^2 = 2^16 = 65536
 ;
-; I have to pass on this problem citing time.
-; NEXT STEPS: 
-; 1. Write python script to expand (h 4) for visual review.
-; 2. USE PAPER to write down your theoretical expansions using p values. This is probably
-;   the easiest and most profound thing. You almost had it!
-
 
 ;;; TESTS BELOW
 
@@ -138,7 +132,7 @@
 (define (dec x)
   (- x 1))
 
-; used in (g n), only works for x > 0, y >= 0
+; used in (g n) (h n), only works for x > 0, y >= 0
 (define (** x y)
   (define (**iter result count)
     (cond ((= 0 count) 1)
@@ -146,6 +140,16 @@
           (else (**iter (* x result) (- count 1)))))
   (**iter x y))
 
+; used in (h n), take a number to its own power repeatedly, e.g. 2^2^2... repeating n-1 times
+(define (exp_repeat x y)
+  ; may need special conditions for y = 0
+  (define (exp_repeat_iter x result y)
+    (if (= y 1)
+         result
+         (exp_repeat_iter x (** x result) (- y 1))))
+  (exp_repeat_iter x x y))
+
+       
 
 
 ; test for (f n) up to n=100 (starting at 100)
@@ -171,18 +175,13 @@
 (test_g 100)
 
 
-; This is the obvious pattern and indeed it fits.
-; (h n) runs 2^2^2... for n times.
-; My test pattern breaks down for this above 4 because of recursion depth limits.
-; Here is a manual test up to 4.
-(h 4)
-(** 2 (** 2 (** 2 2)))
-(h 3)
-(** 2 (** 2 2 ))
-(h 2)
-(** 2 2)
-(h 1)
-2
+; test for (h n) up to n=4 (starting at 4)
+; PASSES
+(define (test_h n)
+  (if (= n 0) 
+    #t
+    (if (= (h n) (exp_repeat 2 n))
+      (test_h (dec n)) 
+      #f )))
 
-
-
+(test_h 5) ;; recursion depth exceeded after 4
