@@ -26,3 +26,6 @@
 
 (fast-mult 10 1)
 (fast-mult 100 2)
+
+; This was thoroughly unchallenging, being nearly a replica of 1.16 using the logic of 1.17.
+; The only difference is that identity of addition is a + 0 = a, whereas for multiplication, a * 1 = a
