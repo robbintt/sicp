@@ -184,4 +184,4 @@
       (test_h (dec n)) 
       #f )))
 
-(test_h 5) ;; recursion depth exceeded after 4
+(test_h 4) ;; recursion depth exceeded after 4

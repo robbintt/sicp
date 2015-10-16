@@ -28,6 +28,7 @@
     angle
     (p (sine (/ angle 3.0)))))
 
+(sine 12.15)
 
 ;;; space - log(n)
 ;;; size - log(n)
