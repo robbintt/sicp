@@ -3,6 +3,13 @@
 ;;; THIS VERSION MODIFIED FOR PROBLEM 1.23
 ;;;
 
+;;; 1.23 EXPLANATION PORTION (SEE LAST SENTENCE OF PROBLEM)
+;;; PROBLEM ASSUMES: Halves test steps. Expect twice as fast.
+;;; Is this confirmed? If not, what is the observed ratio?
+;;; This problem, directly compared against 1.22 yields a ratio of 1/1.7 on the highest prime.
+;;; Overhead from the next function occurs EVERY TIME we get the next test-divisor.
+;;; Having a function inside a recursive method has a major impact.
+
 (define (smallest-divisor n)
   (find-divisor n 2))
 
@@ -35,7 +42,7 @@
 ;;;
 ;;; 1.22 - write search-for-primes which checks primality of consecutive
 ;;;         odd integers in a specified range. odd? is builtin.
-;;; THIS VERSION MODIFIED FOR 1.23 - SCAFFOLDING MOVED ABOVE (MODIFIED FROM EXAMPLE)
+;;; THIS VERSION MODIFIED FOR 1.23 - CORE CODE ABOVE, SCAFFOLDING BELOW (MODIFIED FROM EXAMPLE)
 ;;;
 
 (define (timed-prime-test n)
