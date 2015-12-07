@@ -1,25 +1,38 @@
 ;;;
+;;; Implement: The Fermat Test
+;;; example from 1.2.6
+;;;
+
+
+(fast-prime? 1000 100)
+(fast-prime? 1999 1000)
+(fast-prime? 2000 1000)
+(fast-prime? 2001 1000)
+
+;;; 1729 is not prime but passes the fermat test. this isn't a good test case
+(fast-prime? 1729 1000)
+
+;;;
 ;;; Modify problem 1.22 to use fermat's 'fast-prime?' (the fermat method).
 ;;; THIS VERSION MODIFIED FOR PROBLEM 1.24
 ;;;
 
-(define (smallest-divisor n)
-  (find-divisor n 2))
+(define (expmod base exp m)
+  (cond ((= exp 0) 1)
+        ((even? exp)
+         (remainder (square (expmod base (/ exp 2) m)) m))
+         (else
+           (remainder (* base (expmod base (- exp 1) m)) m))))
 
-(define (find-divisor n test-divisor)
-  (cond ((> (square test-divisor) n) n)
-        ((divides? test-divisor n) test-divisor)
-        (else (find-divisor n (next test-divisor)))))
+(define (fermat-test n)
+  (define (try-it a)
+    (= (expmod a n n) a))
+  (try-it (+ 1 (random (- n 1)))))
 
-(define (next n)
-  (cond ((= n 2) 3)
-        (else (+ n 2))))
-
-(define (divides? a b)
-  (= (remainder b a) 0))
-
-(define (prime? n)
-  (= n (smallest-divisor n)))
+(define (prime? n times)
+  (cond ((= times 0) true)
+        ((fermat-test n) (fast-prime? n (- times 1)))
+        (else false)))
 
 ;;;
 ;;; (prime? 43)
@@ -37,7 +50,12 @@
 ;;;         odd integers in a specified range. odd? is builtin.
 ;;; test scaffolding taken from 1.22 for problem 1.24, no changes expected.
 ;;; CHANGES:
-;;; (none yet)
+;;; prime? now takes 2 parameters. since the problem does not specify the
+;;; number of times (precision) of the fermat test, we set times equal to
+;;; the number we are testing. in practice, times would either need to detect
+;;; retests and avoid them or use a bell curve to determine precision. for
+;;; example, 65% accuracy is achieved by this test. if we tested 1.67*n then
+;;; we would achieve 95% accuracy, etc. (see topic: 'bell curve' for more info).
 ;;;
 
 (define (timed-prime-test n)
@@ -46,8 +64,7 @@
   (start-prime-test n (runtime)))
 
 (define (start-prime-test n start-time)
-  (cond ((prime? n)
-         (report-prime (- (runtime) start-time)))
+  (cond ((prime? n n) (report-prime (- (runtime) start-time)))
          (else #f)))
 
 (define (report-prime elapsed-time)
