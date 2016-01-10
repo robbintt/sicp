@@ -10,7 +10,7 @@
     (+ (term a)
        (sum term (next a) next b))))
 
-
+;;; iterative implementation
 (define (iter-sum term a next b)
   (define (iter a result)
     (if (> a b)
