@@ -36,6 +36,7 @@
 
 
 ; This works but I am obviously missing a callback to the fixed-point code pattern.
+; Lets isolate the try method from the cont-frac method.
 (define (cont-frac n d k) 
   (define (cont-frac-helper n d k i)
     (let ((n-value (n i))
@@ -60,45 +61,54 @@
         (/ n-value (+ d-value (cont-frac-helper n d k (+ i 1)))))))
   (cont-frac-helper n d k 1))
 
-;;; here is the fixed point pattern built to accept cont-frac
-;;; note that here we are looking for a fixed point for i, the depth of the fractions.
-;;; we are trying to find the number of iterations of the cont-frac method 
-;;; relative to the output of the function.
-;;; kind of different... not really a fixed point at all
-;;; before we were directly finding the fixed point of an algebraic function
-;;;
-;;; a separate function defines how guess changes. weird!
-(define (fixed-point-cont-frac n d f first-guess guess-step)
+; a general iterative convergence detector for f.
+; it does reuse close-enough? from before.
+; it is necessary to re-tool the close-enough and function definition
+; to accomodate the inputs of you are trying to detect.
+; 
+; it would probably be better to pass f-wrapper which would pack all arguments
+; of f except the guess. however, for this we need to use closures.
+(define (convergence-detector n d f first-guess next)
   (define (try guess)
-    (newline)
-    (display (f n d guess))
-    (let ((next (guess-step guess)))
-      (if (close-enough? (f n d guess) (f n d next))
-        guess
-        (try next))))
+    (if (close-enough? (f n d guess) (f n d (next guess)))
+      guess
+      (try (next guess))))
   (try first-guess))
 
+
 ; lambdas in the problem for n, d:
-(define (n i) 1.0)
-(define (d i) 1.0)
+(define (phi-n i) 1.0)
+(define (phi-d i) 1.0)
 
-(cont-frac n d 40)
+(cont-frac phi-n phi-d 40)
 
-(define (increment guess) (+ 1 guess))
+(define (increment x) (+ 1 x))
 
-(fixed-point-cont-frac n d cont-frac 1 increment)
+(convergence-detector phi-n phi-d cont-frac 1 increment)
 
 ;;; FINALLY we need to turn cont-frac into a recursive/iterative function. analyze the
-;;; method written above and do the other way.t
-
-; it looks like an iterative method because it increments a helper function in the
-; recursive call.
-;
-; a recursive function would put the incrementor state into the method, lets do that?
+;;; method written above and do the other way.
 
 
+; an iterative function will pass the result each time
+; a little help from bill the lizard. for some reason i couldn't get my head
+; around the beginning state of the iterator. it's obvious written out. most things are.
+(define (cont-frac-iter n d k) 
+  (define (frac-iter k result)
+    (let ((n-value (n k))
+          (d-value (d k)))
+      (if (= k 1)
+        (/ n-value (+ d-value result))
+        (frac-iter (- k 1) (/ n-value (+ d-value result))))))
+  (frac-iter (- k 1) (/ (n k) (d k))))
 
+(cont-frac-iter phi-n phi-d 40)
 
-
+; this seems to hang, probably got an oscillator in the iterative function?
+;(convergence-detector phi-n phi-d cont-frac-iter 1 increment)
+; It is verified verified, (= k 1) will hang.  if you make one attempt it 
+; will need a special case for (= k 0) due to design.  The special case 
+; would return just (/ (n k) (d k)).
+(convergence-detector phi-n phi-d cont-frac-iter 2 increment)
 
 
