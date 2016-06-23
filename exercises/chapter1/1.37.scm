@@ -62,14 +62,17 @@
 
 ;;; here is the fixed point pattern built to accept cont-frac
 ;;; note that here we are looking for a fixed point for i, the depth of the fractions.
-;;; we are trying to find a fixed point of the number of iterations
-;;; of the cont-frac method.
+;;; we are trying to find the number of iterations of the cont-frac method 
+;;; relative to the output of the function.
+;;; kind of different... not really a fixed point at all
 ;;; before we were directly finding the fixed point of an algebraic function
-(define (fixed-point-cont-frac n d f first-guess)
+;;;
+;;; a separate function defines how guess changes. weird!
+(define (fixed-point-cont-frac n d f first-guess guess-step)
   (define (try guess)
     (newline)
     (display (f n d guess))
-    (let ((next (+ guess 1)))
+    (let ((next (guess-step guess)))
       (if (close-enough? (f n d guess) (f n d next))
         guess
         (try next))))
@@ -81,7 +84,9 @@
 
 (cont-frac n d 40)
 
-(fixed-point-cont-frac n d cont-frac 1)
+(define (increment guess) (+ 1 guess))
+
+(fixed-point-cont-frac n d cont-frac 1 increment)
 
 ;;; FINALLY we need to turn cont-frac into a recursive/iterative function. analyze the
 ;;; method written above and do the other way.t
