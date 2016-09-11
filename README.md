@@ -1,7 +1,7 @@
 
 ##### Chapter 1:
 
-I read each section, then completed its problems.  Sometimes I read ahead.
+I read through each section, then completed its problems.  Sometimes I read further ahead.
 
 After each problem set required myself to go back to the next subsequent section and re-read through to the next problem set. During this final read, I typed and ran all examples. In this way, I read most of the chapter 2-4 times.
 
