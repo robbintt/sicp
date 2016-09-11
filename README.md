@@ -2,11 +2,10 @@
 ### Chapter 1
 
 ##### Rules / Cadence
-- I read through each section, then completed its problems.  Sometimes I read further ahead.
-- After each problem set, I required myself to go backwards to the subsequent section from my last completed exercise. I then re-read to the next problem while typing/running all examples. 
+- I stepped through the chapter linearly, completing problems in order.
+- After each problem set, I moved the 'reading pointer' backwards to the section subsequent to the last completed exercise. I then read forwards to the next problem while typing/running all examples. 
 - In this way, I read each section 2-4 times.
-- I worked linearly through the exercises.
-- I never referred to external sources when solving a problem.
+- I never used external sources or techniques not referenced in the preceding text to solve a problem.
 - Incorrect answers were discovered by observing Bill The Lizard's answers. They are rare and annotated as such.
 - I received 'hints' by observing the correct answer after failing, very rarely the intermediate work. I believe I did have to refer to intermediate work once.
 
