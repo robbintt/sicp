@@ -5,10 +5,10 @@
 - I read through each section, then completed its problems.  Sometimes I read further ahead.
 - After each problem set, I required myself to go backwards to the subsequent section from my last completed exercise. I then re-read to the next problem while typing/running all examples. 
 - In this way, I read each section 2-4 times.
-- I worked linearly on each exercise until I solved it. 
-- I never referred to external sources to arrive at my answer. 
-- Incorrect answers were discovered by observing Bill The Lizard's work. They are rare and annotated as such.
-- I only received 'hints' by observing the correct answer after failing. I did not observe any intermediate work at any time.
+- I worked linearly through the exercises.
+- I never referred to external sources when solving a problem.
+- Incorrect answers were discovered by observing Bill The Lizard's answers. They are rare and annotated as such. I did not observe his intermediate work or reasoning.
+- I received 'hints' by observing the correct answer after failing, very rarely the intermediate work.
 
 
 - `examples` - all book examples typed with supporting code
