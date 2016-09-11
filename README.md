@@ -7,8 +7,8 @@
 - In this way, I read each section 2-4 times.
 - I worked linearly through the exercises.
 - I never referred to external sources when solving a problem.
-- Incorrect answers were discovered by observing Bill The Lizard's answers. They are rare and annotated as such. I did not observe his intermediate work or reasoning.
-- I received 'hints' by observing the correct answer after failing, very rarely the intermediate work.
+- Incorrect answers were discovered by observing Bill The Lizard's answers. They are rare and annotated as such.
+- I received 'hints' by observing the correct answer after failing, very rarely the intermediate work. I believe I did have to refer to intermediate work once.
 
 
 ##### Structure
