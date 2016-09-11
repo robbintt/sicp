@@ -3,7 +3,9 @@
 
 I read through each section, then completed its problems.  Sometimes I read further ahead.
 
-After each problem set required myself to go back to the next subsequent section and re-read through to the next problem set. During this final read, I typed and ran all examples. In this way, I read most of the chapter 2-4 times.
+After each problem set, I required myself to go backwards to the subsequent section from my last completed exercise. I then re-read to the next problem while typing/running all examples. 
+
+In this way, I read each section 2-4 times.
 
 I worked linearly on each exercise until I solved it. 
 
