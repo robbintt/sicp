@@ -158,4 +158,5 @@ n-fold-average-damp
 
 ((n-root 32) (expt 2 32))
 
-
+; lets test bill's numbers, his solution is pretty different
+((n-root 128) 340282366920938463463374607431768211456)
