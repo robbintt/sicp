@@ -97,10 +97,10 @@
     (improve-recursor improved-guess))))
   improve-recursor)
 
-; first problem: where is the test value / radicand stored?
-; lets just keep it in internal function definitions
 (define (sqrt-iter-improve radicand)
 
+  ; first problem: where is the test value / radicand stored?
+  ; lets just keep it in internal function definitions
   (define (improve guess)
     (average guess (/ radicand guess)))
   ; use stub because we don't actually use the improved-guess from iterative-improve
@@ -109,6 +109,7 @@
 
   ((iterative-improve good-enough? improve) 1.0))
 
+; tests worked
 (sqrt-iter-improve 9)
 (sqrt-iter-improve 25)
 (sqrt-iter-improve 10000)
@@ -128,6 +129,7 @@
   (fixed-point-iter-improve (lambda (y) (average y (/ x y)))
                1.0))
 
+; good to go!
 (sqrt-iter-improve-fp 9)
 (sqrt-iter-improve-fp 25)
 (sqrt-iter-improve-fp 10000)
