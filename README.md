@@ -9,6 +9,10 @@
 - Incorrect answers were discovered by observing Bill The Lizard's answers. They are rare and annotated as such.
 - I received 'hints' by observing the correct answer after failing, very rarely the intermediate work. I believe I did have to refer to intermediate work once.
 
+##### Todo
+
+- Write a chapter 1 outline with: summary, glossary, tricks, and highlights.
+    - Write a problem set digest of some sort. What would be useful? Could start by dumping all problem comments into an outline.
 
 ##### Structure
 - `examples` - all book examples typed with supporting code
