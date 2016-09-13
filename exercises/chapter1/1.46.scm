@@ -91,16 +91,34 @@
   ; this method takes a guess and returns the result when it satisifies good-enough?
   ; it should improve the guess using improve-guess
   (define (improve-recursor guess)
+    ; weakness: i set the number of terms in improve-guess in this meta-procedure
+    ; bill's method does not have this weakness
+    ; weakness2: i also set the number of terms in good-enough?
+    ; it may not be possible to avoid this.
+    ; bill makes other sacrifices
     (let ((improved-guess (improve-guess guess)))
-    (if (good-enough? guess improved-guess)
-    improved-guess
-    (improve-recursor improved-guess))))
+      (if (good-enough? guess improved-guess)
+      improved-guess
+      (improve-recursor improved-guess))))
   improve-recursor)
+
+; reviewing this, bill's iterative improve is a bit simpler.
+; but he compromises, requiring his improve and good-enough? functions are
+; always expressed in terms of guess.
+; he also calculates his improved-guess in both good-enough? and improve
+(define (bill-iterative-improvement good-enough? improve)
+  (define (iter-imp guess)
+    (if (good-enough? guess)
+      guess
+      (iter-imp (improve guess))))
+  iter-imp)
 
 (define (sqrt-iter-improve radicand)
 
   ; first problem: where is the test value / radicand stored?
   ; lets just keep it in internal function definitions
+  ; note that improve is average-damping, the name is not changed from
+  ; the 1.1.7 name.
   (define (improve guess)
     (average guess (/ radicand guess)))
   ; use stub because we don't actually use the improved-guess from iterative-improve
