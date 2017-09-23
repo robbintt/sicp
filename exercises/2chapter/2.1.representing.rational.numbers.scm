@@ -30,6 +30,12 @@
 ; this reduces negatives to the numerator, n, and makes a rational
 (define (make-rat n d)
   (define (n-checker n d)
+    ; note that the cases (n, d) and (-n, d) do not need alteration
+    ; also because of the idempotency of (abs d) we can always apply it
+    ; this could be more explicit and carry all three cases, removing the (abs d)
+    ; but then there might be an extra test (d-checker n d) which would
+    ; need to be compared against the (abs d).  The shape of the incoming data
+    ; would ultimately determine which is more efficient
     (cond ((and (< n 0) (< d 0)) (abs n))
           ((and (> n 0) (< d 0)) (neg n))
           (else n)))
