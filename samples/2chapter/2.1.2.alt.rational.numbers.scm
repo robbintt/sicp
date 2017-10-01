@@ -3,6 +3,8 @@
 ; Alternately, we can perform rational number (fraction) reduction to lowest terms
 ; whenever we access the parts of the rational number, rather than during construction
 ; in other words, reduction can happen in the selectors instead of constructor
+; because our abstraction for add-rat, sub-rat, mul-rat, div-rat are above this abstraction
+; layer, it is not necessary to change them
 
 
 ; constructor
@@ -46,12 +48,25 @@
             (* (denom x) (denom y))))
 
 ; subtract two rational numbers: sub-rat
+(define (sub-rat x y)
+  (make-rat (- (* (numer x) (denom y))
+	       (* (numer y) (denom x)))
+	    (* (denom x) (denom y))))
 
 ; multipy two rational numbers: mul-rat
+(define (mul-rat x y)
+  (make-rat (* (numer x) (numer y))
+	    (* (denom x) (denom y))))
 
 ; divide two rational numbers: div-rat
+(define (div-rat x y)
+  (make-rat (* (numer x) (denom y))
+	    (* (denom x) (numer y))))
 
 ; test equality of two rational numbers: equal-rat?
+(define (equal-rat? x y)
+  (= (* (numer x) (denom y))
+     (* (numer y) (denom x))))
 
 ;; tests
 

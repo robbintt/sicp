@@ -67,12 +67,25 @@
             (* (denom x) (denom y))))
 
 ; subtract two rational numbers: sub-rat
+(define (sub-rat x y)
+  (make-rat (- (* (numer x) (denom y))
+	       (* (numer y) (denom x)))
+	    (* (denom x) (denom y))))
 
 ; multipy two rational numbers: mul-rat
+(define (mul-rat x y)
+  (make-rat (* (numer x) (numer y))
+	    (* (denom x) (denom y))))
 
 ; divide two rational numbers: div-rat
+(define (div-rat x y)
+  (make-rat (* (numer x) (denom y))
+	    (* (denom x) (numer y))))
 
 ; test equality of two rational numbers: equal-rat?
+(define (equal-rat? x y)
+  (= (* (numer x) (denom y))
+     (* (numer y) (denom x))))
 
 ;; tests
 
@@ -82,6 +95,11 @@
 (print-rat (add-rat one-half one-third))
 ;(print-rat (mult-rat one-half one-third))
 (print-rat (add-rat one-third one-third))
+
+(print-rat (sub-rat one-half one-third))
+(print-rat (mul-rat one-half one-third))
+(print-rat (div-rat one-half one-third))
+(equal-rat? one-half one-third)
 
 
 ; we can use gcd to have make-rat reduce the rational number to lowest terms
