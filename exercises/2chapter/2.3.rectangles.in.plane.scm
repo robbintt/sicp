@@ -135,7 +135,7 @@
 
 
 
-;; test out permiter, area, and the selectors and constructors
+;; test out perimeter, area, and the selectors and constructors
 (define v1 (make-vector 2 -4))
 (define v2 (make-vector 2 -4))
 (define myrect (make-rectangle v1 v2))
@@ -150,3 +150,14 @@
 
 (perimeter myrect2)
 (area myrect2)
+
+
+;; i don't think perimeter and area are abstract enough to satisfy the problem
+;; i had to write special selectors for the vector rectangle to interface with the point-
+;; based perimeter and area functions
+;; what other implementation of rectangle is reasonable?  should it still be in terms of points? that is cheating.
+;;
+;; the methods area and perimeter need a common interface with rectangle, so i guess you must
+;; write selectors that are compatible. it seems like we are breaking an abstraction barrier...
+;; it would be breaking an abstraction barrier because the selectors are not in terms of the base data type of vector
+;; instead we are casting vectors to points through the lens of rectangle
