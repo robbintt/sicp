@@ -87,7 +87,7 @@
         (end-y (y-point (end-rectangle rectangle))))
     (* (- start-x end-x) (- start-y end-y))))
 
-
+;; test out permiter, area, and the selectors and constructors
 (define p1 (make-point 2 2))
 (define p2 (make-point -2 -2))
 (define myrect (make-rectangle p1 p2))
@@ -103,3 +103,50 @@
 (perimeter myrect2)
 (area myrect2)
 
+
+;; now reimplement rectangle so that the perimeter and area procedures still work
+;; how to make the procedures still work: define them in terms of selectors
+;; 
+;; right now we use two points to explain rectangle
+;; alternative: use the zero-most point and the length for each dimension
+;; * alternative: use any point and a negative or positive length for each dimension
+(define (make-vector x x-len) (cons x x-len))
+(define (get-vector-origin vector) (car vector))
+(define (get-vector-magnitude vector) (cdr vector))
+(define (get-vector-end vector) (+ (car vector) (cdr vector)))
+
+;; if i pass a vector rectangle into area, perimeter - they require the start-rectangle and
+;; end-rectangle selectors to work... but which definitions of them?
+;; i suppose if i am redefining rectangle, i am redefining its selectors in terms of the
+;; new rectangle as well, so i need to redefine start-rectangle and end-rectangle
+;; ... so should i pass those functions into area and perimeter? nah we will just write over
+;; the methods.
+;; i don't like that i am writing a custom selector for the vector rectangle to get the points
+;; it should be possible to make the functions area and perimeter work for the vectors native
+;; to the vector rectangle...
+(define (make-rectangle x-vector y-vector)
+  (cons x-vector y-vector))
+;; derive the start point of the vector rectangle
+(define (start-rectangle rectangle)
+  (make-point (get-vector-origin (car rectangle)) (get-vector-origin (cdr rectangle))))
+;; derive the end point of the vector rectangle
+(define (end-rectangle rectangle)
+  (make-point (get-vector-end (car rectangle)) (get-vector-end (cdr rectangle))))
+
+
+
+;; test out permiter, area, and the selectors and constructors
+(define v1 (make-vector 2 -4))
+(define v2 (make-vector 2 -4))
+(define myrect (make-rectangle v1 v2))
+
+(define v3 (make-vector 2 7))
+(define v4 (make-vector 2 7))
+(define myrect2 (make-rectangle v3 v4))
+
+
+(perimeter myrect)
+(area myrect)
+
+(perimeter myrect2)
+(area myrect2)
