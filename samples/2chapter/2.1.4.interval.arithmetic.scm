@@ -14,6 +14,12 @@
         (p4 (* (upper-bound x) (upper-bound y))))
     (make-interval (min p1 p2 p3 p4)
                    (max p1 p2 p3 p4))))
+;; the interval data type does already make an assumption that lower-bound and upper-bound are accurate, so this implementation is overwrought
+;; hmm see exercise 2.11, which recommends that there is actually one case that requires all this work
+;; i prefer this one which uses the properties of the data structure, i think it is more flexible, e.g. if we aren't using arithmetical systems
+(define (better-mul-interval x y)
+  (make-interval (* (lower-bound x) (lower-bound y))
+                 (* (upper-bound x) (upper-bound y))))
 
 ;; first interval x multiplied by the inverse of the second interval y
 ;; i suppose it takes the form x/y == x*(1/y) 
