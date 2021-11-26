@@ -64,3 +64,18 @@
 (define midpoint (midpoint-segment seg1))
 
 (print-point midpoint)
+
+; try another case
+(define p1 (make-point 4 4))
+(define p2 (make-point -2 -2))
+(define seg1 (make-segment p1 p2))
+(define midpoint (midpoint-segment seg1))
+(print-point midpoint)
+
+; try another case
+(define p1 (make-point 1 -1))
+(define p2 (make-point -49 50))
+(define seg1 (make-segment p1 p2))
+(define midpoint (midpoint-segment seg1))
+(print-point midpoint)
+
